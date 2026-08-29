@@ -49,11 +49,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      # The linter lives in the hax-skills repository; this URL resolves once
-      # that repository is public.
+      # The linter lives in the hax-skills repository. Until that repository is
+      # public the clone is refused; the job then skips with a notice rather
+      # than failing or passing silently.
+      - name: Probe hax-skills
+        id: probe
+        continue-on-error: true
+        run: git ls-remote --exit-code https://github.com/spitters/hax-skills HEAD
+      - name: hax-skills not reachable
+        if: steps.probe.outcome != 'success'
+        run: echo "::notice::hax-skills is not reachable (private); lint skipped"
       - name: Install hax-treesitter
+        if: steps.probe.outcome == 'success'
         run: pip install "git+https://github.com/spitters/hax-skills#subdirectory=hax-treesitter"
       - name: Lint member crates
+        if: steps.probe.outcome == 'success'
         run: |
           for crate in aesccm-hax aesgcmsiv-hax aeskw-hax cmac-hax hmacdrbg-hax; do
             hax-lint --errors-only --no-color "$crate"/src/*.rs
