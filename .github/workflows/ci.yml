@@ -40,3 +40,21 @@ jobs:
         run: cargo doc --no-deps -p ${{ matrix.crate }}
         env:
           RUSTDOCFLAGS: -D warnings
+
+  hax-lint:
+    name: hax-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # The linter lives in the hax-skills repository; this URL resolves once
+      # that repository is public.
+      - name: Install hax-treesitter
+        run: pip install "git+https://github.com/spitters/hax-skills#subdirectory=hax-treesitter"
+      - name: Lint member crates
+        run: |
+          for crate in aesccm-hax aesgcmsiv-hax aeskw-hax cmac-hax hmacdrbg-hax; do
+            hax-lint --errors-only --no-color "$crate"/src/*.rs
+          done

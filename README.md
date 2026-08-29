@@ -48,6 +48,8 @@ The hax frontend export of a crate (`hax_frontend_export.json`, not tracked)
 is produced inside the crate directory with `cargo hax json`; the Lean module
 with `cargo hax into lean`. Both need the `cargo-hax` frontend from the hax
 repository.
+CI also runs the syntax-level pre-check `hax-lint src/*.rs` from
+[hax-treesitter](https://github.com/spitters/hax-skills) over every crate.
 
 ## License
 
