@@ -1,0 +1,17 @@
+[package]
+name = "ctrdrbg-hax"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "CTR_DRBG with AES-128 and no derivation function (NIST SP 800-90A Rev. 1, Section 10.2.1) in a hax-extractable Rust subset"
+repository = "https://github.com/spitters/hax-specs"
+readme = "README.md"
+keywords = ["cryptography", "drbg", "aes", "hax", "formal-verification"]
+categories = ["cryptography"]
+
+[dependencies]
+
+[dev-dependencies]
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(kani)'] }

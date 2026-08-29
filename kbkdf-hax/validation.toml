@@ -1,0 +1,10 @@
+# Validation manifest. Fields: `primitive` names the algorithm and standard;
+# `reference` names the published test vectors the tests check against;
+# `reference_kind` classifies the source; `test_files` lists the test modules;
+# `notes` states which tests are known-answer tests and which are
+# self-consistency checks.
+primitive = "KBKDF in Counter Mode with HMAC-SHA-256 (NIST SP 800-108 Rev. 1, Section 4.1)"
+reference = "NIST CAVP KBKDF KDFCTR_gen.rsp (CAVS 14.4), group [PRF=HMAC_SHA256] [CTRLOCATION=BEFORE_FIXED] [RLEN=32_BITS], all 40 COUNT entries (L = 128, 160, 256, 320; KI 32 bytes; FixedInputDataByteLen 60); PRF cross-checks against RFC 4231 HMAC-SHA-256 Test Cases 1 and 2 and FIPS 180-4 SHA-256 of the empty string and of \"abc\""
+reference_kind = "nist-cavp"
+test_files = ["tests/kat_vectors.rs", "tests/cavp_kdfctr.rs"]
+notes = "tests/cavp_kdfctr.rs checks the 40 CAVP vectors byte-for-byte through kbkdf_counter_hmac256_fixed, the entry point over opaque fixed input data, and checks that the unused tail of the output buffer is zero. tests/kat_vectors.rs drives kbkdf_counter_hmac256 (fixed input data Label || 0x00 || Context || [L]_4) with self-consistency checks: agreement with a direct HMAC of the assembled PRF input, determinism, and sensitivity to key, label, context and L. kat_hmac_rfc4231_case1 and kat_sha256_empty there, and the unit tests in src/lib.rs, check the PRF against the RFC 4231 and FIPS 180-4 literals."

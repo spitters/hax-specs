@@ -1,0 +1,10 @@
+# Validation manifest. Fields: `primitive` names the algorithm and standard;
+# `reference` names the published test vectors the tests check against;
+# `reference_kind` classifies the source; `test_files` lists the test modules;
+# `notes` states which tests are known-answer tests and which are
+# self-consistency checks.
+primitive = "Hash_DRBG with SHA-256 (NIST SP 800-90A Rev. 1, Section 10.1.1)"
+reference = "NIST CAVP DRBGVS Hash_DRBG.rsp, [SHA-256] groups, COUNT = 0 of the no_reseed, pr_false and pr_true files (EntropyInputLen 256, NonceLen 128, ReturnedBitsLen 1024); and the NIST Hash_DRBG worked example (hash_drbg.pdf), SHA-256 section, prediction resistance not enabled, no reseed, empty personalization and additional input"
+reference_kind = "nist-cavp"
+test_files = ["tests/kat_vectors.rs", "tests/cavp_drbgvs.rs"]
+notes = "tests/cavp_drbgvs.rs checks twelve CAVP vectors byte-for-byte (no reseed, reseed between instantiate and generate, and prediction resistance as reseed before each generate; each with and without personalization string and additional input). kat_nist_sp800_90a_sha256 in tests/kat_vectors.rs checks the worked example: V after instantiate and the two chained 512-bit generate outputs. The remaining tests there are self-consistency checks of the byte arithmetic and state transitions."

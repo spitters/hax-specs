@@ -1,0 +1,10 @@
+# Validation manifest. Fields: `primitive` names the algorithm and standard;
+# `reference` names the published test vectors the tests check against;
+# `reference_kind` classifies the source; `test_files` lists the test modules;
+# `notes` states which tests are known-answer tests and which are
+# self-consistency checks.
+primitive = "CTR_DRBG with AES-128, no derivation function (NIST SP 800-90A Rev. 1)"
+reference = "NIST CAVP DRBGVS CTR_DRBG.rsp, [AES-128 no df] groups, COUNT = 0 of the no_reseed, pr_false and pr_true files (EntropyInputLen 256, NonceLen 0, ReturnedBitsLen 512); AES-128 core against FIPS 197 Appendix B"
+reference_kind = "nist-cavp"
+test_files = ["tests/kat_vectors.rs", "tests/cavp_drbgvs.rs"]
+notes = "tests/cavp_drbgvs.rs checks twelve CAVP vectors byte-for-byte (PersonalizationStringLen and AdditionalInputLen each 0 or 256; no reseed; reseed between instantiate and generate; prediction resistance as reseed before each generate). kat_nist_sp80090a_ctr_aes128_no_df_no_reseed in tests/kat_vectors.rs is the no_reseed 0/0 vector; the remaining tests there are self-consistency checks of the counter, Update, Instantiate, Generate and Reseed. test_aes128_fips197_appendix_b in src/lib.rs checks the AES-128 core."

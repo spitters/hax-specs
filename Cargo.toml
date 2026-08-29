@@ -2,8 +2,14 @@
 resolver = "2"
 members = [
     "aesccm-hax",
+    "aesgcm-hax",
     "aesgcmsiv-hax",
     "aeskw-hax",
     "cmac-hax",
+    "ctrdrbg-hax",
+    "hashdrbg-hax",
     "hmacdrbg-hax",
+    "kbkdf-hax",
+    "kmac-hax",
+    "xtsaes-hax",
 ]

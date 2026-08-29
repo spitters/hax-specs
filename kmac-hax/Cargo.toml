@@ -1,0 +1,16 @@
+[package]
+name = "kmac-hax"
+version = "0.1.0"
+edition = "2021"
+description = "KMAC128 and KMAC256 (NIST SP 800-185) over cSHAKE and a FIPS 202 Keccak-f[1600] sponge, as a hax-extractable Rust specification"
+license = "MIT"
+repository = "https://github.com/spitters/hax-specs"
+readme = "README.md"
+keywords = ["cryptography", "kmac", "cshake", "hax", "formal-verification"]
+categories = ["cryptography"]
+
+[dependencies]
+
+[dev-dependencies]
+# RustCrypto SHA-3 / cSHAKE, used only as a test oracle
+sha3 = "0.10"

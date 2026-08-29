@@ -18,10 +18,16 @@ in its README and in `validation.toml`.
 | Crate | Standard | Vectors | Cross-check |
 | --- | --- | --- | --- |
 | [`aesccm-hax`](aesccm-hax) | AES-CCM, NIST SP 800-38C / RFC 3610 | RFC 3610 §8 Packet Vectors 1–24 | RustCrypto `ccm` |
+| [`aesgcm-hax`](aesgcm-hax) | AES-GCM, NIST SP 800-38D (AES-128/256, 96-bit IV) | NIST CAVP GCMVS encrypt and decrypt files, FIPS 197 Appendix C | RustCrypto `aes-gcm` |
 | [`aesgcmsiv-hax`](aesgcmsiv-hax) | AES-GCM-SIV, RFC 8452 (AES-128) | RFC 8452 Appendix C.1 | — |
 | [`aeskw-hax`](aeskw-hax) | AES Key Wrap, NIST SP 800-38F / RFC 3394 (AES-128 KEK) | RFC 3394 §4.1 | RustCrypto `aes-kw` |
 | [`cmac-hax`](cmac-hax) | AES-CMAC, NIST SP 800-38B (AES-128) | SP 800-38B Appendix D.1 | RustCrypto `cmac` |
+| [`ctrdrbg-hax`](ctrdrbg-hax) | CTR_DRBG with AES-128 (no derivation function), NIST SP 800-90A Rev. 1 | NIST CAVP DRBGVS (no_reseed, pr_false, pr_true) | — |
+| [`hashdrbg-hax`](hashdrbg-hax) | Hash_DRBG with SHA-256, NIST SP 800-90A Rev. 1 | NIST CAVP DRBGVS (no_reseed, pr_false, pr_true), NIST worked example | — |
 | [`hmacdrbg-hax`](hmacdrbg-hax) | HMAC_DRBG with SHA-256, NIST SP 800-90A Rev. 1 | NIST CAVP DRBGVS | — |
+| [`kbkdf-hax`](kbkdf-hax) | KBKDF counter mode with HMAC-SHA256, NIST SP 800-108 Rev. 1 | NIST CAVP KDFCTR_gen (HMAC_SHA256, counter before fixed data, 32-bit counter) | — |
+| [`kmac-hax`](kmac-hax) | KMAC128/256 over cSHAKE, NIST SP 800-185 / FIPS 202 | SP 800-185 samples 1–6, FIPS 202 digests | RustCrypto `sha3` (cSHAKE) |
+| [`xtsaes-hax`](xtsaes-hax) | XTS-AES-128, IEEE Std 1619-2018 (whole blocks) | IEEE 1619 Annex B Vectors 1–4, FIPS 197 Appendix C.1 | RustCrypto `xts-mode` |
 
 The pure specifications of the libcrux primitives (hashes, HMAC, HKDF, AES,
 GCM, ChaCha20-Poly1305, X25519, Ed25519, P-256, ECDSA) live in the separate

@@ -1,0 +1,18 @@
+[package]
+name = "hashdrbg-hax"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Hash_DRBG with SHA-256 (NIST SP 800-90A Rev. 1, Section 10.1.1) in a hax-extractable Rust subset"
+repository = "https://github.com/spitters/hax-specs"
+readme = "README.md"
+keywords = ["cryptography", "drbg", "sha256", "hax", "formal-verification"]
+categories = ["cryptography"]
+
+[dependencies]
+
+[dev-dependencies]
+hex-literal = "0.4"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(kani)'] }

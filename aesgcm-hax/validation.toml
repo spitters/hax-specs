@@ -1,0 +1,10 @@
+# Validation manifest. Fields: `primitive` names the algorithm and its standard;
+# `reference` names the known-answer source and any cross-check oracle;
+# `reference_kind` classifies the source (rfc-vectors, nist-cavp, oracle);
+# `test_files` lists the test modules that consume them; `notes` says what each
+# test module asserts.
+primitive = "AES-GCM (AES-128/256, FIPS 197 + GHASH over GF(2^128))"
+reference = "NIST CAVP GCMVS test vectors (gcmEncryptExtIV128/256.rsp and gcmDecrypt128/256.rsp, CAVS 14.0, 2012-08-31); cross-checked against RustCrypto aes-gcm 0.10.3 (NIST-validated)"
+reference_kind = "nist-cavp"
+test_files = ["tests/kat_vectors.rs", "tests/cavp_decrypt_vectors.rs"]
+notes = "kat_vectors.rs asserts (CT,Tag) byte-for-byte against NIST CAVP vectors and against the RustCrypto aes-gcm crate on the same inputs; raw AES blocks checked against FIPS 197 Appendix C. Property tests (roundtrip/tamper) are secondary. cavp_decrypt_vectors.rs feeds gcmDecrypt128/256.rsp Count 0-6 (96-bit IV, 128-bit PT/AAD/tag) through gcm_decrypt_var, asserting the plaintext on PASS vectors and rejection with no plaintext written on FAIL vectors."

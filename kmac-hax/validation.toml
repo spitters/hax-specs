@@ -1,0 +1,9 @@
+# Validation manifest for this crate.
+# Fields: `primitive` names the algorithm; `reference` and `reference_kind`
+# identify the source of the known-answer vectors; `test_files` lists the
+# test modules that assert them; `notes` states what each test file checks.
+primitive = "KMAC128/KMAC256 (SP 800-185, cSHAKE-based keyed MAC)"
+reference = "NIST SP 800-185 KMAC sample vectors (KMAC128 samples 1-3, KMAC256 samples 4-6)"
+reference_kind = "nist-cavp"
+test_files = ["tests/kmac_kat.rs", "tests/kmac_crosscheck.rs"]
+notes = "The crate ships a byte-exact FIPS-202 Keccak-f[1600] sponge (src/keccak.rs) plus cSHAKE and the SP 800-185 encoding layer (bytepad(encode_string(K)) || X || right_encode(L), function-name \"KMAC\"); kmac128/kmac256 evaluate the full construction. tests/kmac_kat.rs drives the crate's own kmac128 against SP 800-185 KMAC samples 1-3 (K=40..5F, X=00 01 02 03 or 00..C7, S empty or \"My Tagged Application\", L=256) and kmac256 against samples 4-6 (L=512), asserting the exact published Outval bytes. keccak_sha3_256_abc and keccak_shake256_empty_prefix pin the ported sponge to FIPS-202 digests first. tests/kmac_crosscheck.rs byte-matches kmac128/kmac256 against KMAC assembled from the RustCrypto sha3 crate's CShake128/CShake256 across key, message and customization lengths."

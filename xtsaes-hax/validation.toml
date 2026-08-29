@@ -1,0 +1,10 @@
+# Validation manifest. Fields: `primitive` names the algorithm and its standard;
+# `reference` names the known-answer source and any cross-check oracle;
+# `reference_kind` classifies the source (rfc-vectors, nist-vectors, paper-vectors, oracle);
+# `test_files` lists the test modules that consume them; `notes` says what each
+# test module asserts.
+primitive = "XTS-AES-128 (IEEE Std 1619-2018)"
+reference = "IEEE Std 1619-2018 Annex B XTS-AES test vectors (Vectors 1-4, unchanged from the 2007 edition); AES-128 block from FIPS 197 Appendix C.1; cross-checked against RustCrypto xts-mode 0.5 crate"
+reference_kind = "paper-vectors"
+test_files = ["tests/kat_vectors.rs", "tests/xts_crosscheck.rs"]
+notes = "kat_vectors.rs feeds Annex B Vectors 1-4 through xts_encrypt_sector and asserts the ciphertext byte-for-byte, pins the AES-128 block against FIPS 197 Appendix C.1, and checks encrypt/decrypt round-trips and GF(2^128) alpha identities; xts_crosscheck.rs byte-matches xts_encrypt_sector and xts_decrypt_sector against the RustCrypto xts-mode crate in both directions across sector lengths, keys, and tweaks, and checks that a flipped ciphertext bit does not decrypt to the plaintext."

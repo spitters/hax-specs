@@ -15,10 +15,16 @@ jobs:
       matrix:
         crate:
           - aesccm-hax
+          - aesgcm-hax
           - aesgcmsiv-hax
           - aeskw-hax
           - cmac-hax
+          - ctrdrbg-hax
+          - hashdrbg-hax
           - hmacdrbg-hax
+          - kbkdf-hax
+          - kmac-hax
+          - xtsaes-hax
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -65,6 +71,6 @@ jobs:
       - name: Lint member crates
         if: steps.probe.outcome == 'success'
         run: |
-          for crate in aesccm-hax aesgcmsiv-hax aeskw-hax cmac-hax hmacdrbg-hax; do
+          for crate in *-hax; do
             hax-lint --errors-only --no-color "$crate"/src/*.rs
           done
