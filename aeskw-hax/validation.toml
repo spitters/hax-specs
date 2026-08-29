@@ -1,0 +1,10 @@
+# Validation manifest. Fields: `primitive` names the algorithm and parameter
+# set; `reference` and `reference_kind` name the published source of the
+# known-answer vectors; `test_files` lists the test files that carry them;
+# `notes` states which tests are known-answer checks and which are
+# self-consistency checks.
+primitive = "AES Key Wrap (RFC 3394; AES-128 KEK)"
+reference = "RFC 3394 Section 4.1 wrap/unwrap vector (KEK 000102…0F, data 001122…FF -> 1FA68B0A…), plus FIPS 197 Appendix B AES-128 block (2b7e1516… -> 3925841d…)"
+reference_kind = "rfc-vectors"
+test_files = ["tests/kat_vectors.rs", "tests/cross_check.rs"]
+notes = "kat_rfc3394_4_1_wrap / kat_rfc3394_4_1_unwrap drive aes_wrap_128 / aes_unwrap_128 and assert the wrapped/unwrapped bytes against the RFC 3394 §4.1 literals; kat_aes128_fips197 checks the AES-128 block against FIPS 197. tests/cross_check.rs compares aes_wrap_128 / aes_unwrap_128 / aes_wrap_256 / aes_unwrap_256 against the RustCrypto aes-kw crate on fixed inputs. Remaining tests (multi-size roundtrips, integrity failures) are self-consistency."

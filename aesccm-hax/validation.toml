@@ -1,0 +1,10 @@
+# Validation manifest. Fields: `primitive` names the algorithm and its standard;
+# `reference` names the known-answer source and any cross-check oracle;
+# `reference_kind` classifies the source (rfc-vectors, nist-vectors, oracle);
+# `test_files` lists the test modules that consume them; `notes` says what each
+# test module asserts.
+primitive = "AES-CCM (SP 800-38C)"
+reference = "RFC 3610 Section 8 Packet Vectors #1-#24; cross-checked against RustCrypto ccm 0.5 crate"
+reference_kind = "rfc-vectors"
+test_files = ["tests/kat_vectors.rs", "tests/rfc3610_vectors_5_24.rs", "tests/ccm_crosscheck.rs"]
+notes = "kat_vectors.rs feeds RFC 3610 vectors #1-#4 through ccm_encrypt and asserts ciphertext||tag byte-for-byte; rfc3610_vectors_5_24.rs does the same for vectors #5-#24 (8- and 10-octet tags, two keys) with a decrypt round-trip and a tamper check; ccm_crosscheck.rs byte-matches the RustCrypto ccm crate across message/AAD lengths."

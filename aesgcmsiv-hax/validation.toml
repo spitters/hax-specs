@@ -1,0 +1,10 @@
+# Validation manifest. Fields: `primitive` names the algorithm the crate
+# specifies; `reference` names the external source the test vectors are
+# transcribed from; `reference_kind` classifies that source; `test_files`
+# lists the test files that assert the vectors; `notes` states which tests
+# are reference checks and which are self-consistency checks.
+primitive = "AES-GCM-SIV (AES-128; POLYVAL over GF(2^128), RFC 8452)"
+reference = "RFC 8452 Appendix C.1 AEAD_AES_128_GCM_SIV test vectors (cases 1-10 and 14: ciphertext + tag, record keys), RFC 8452 Appendix A POLYVAL example, plus FIPS 197 Appendix B AES-128 block (2b7e1516... -> 3925841d...)"
+reference_kind = "rfc-vectors"
+test_files = ["tests/kat_vectors.rs"]
+notes = "kat_c1_* .. kat_c14_* drive aes_gcm_siv_seal and assert (ciphertext, tag) byte-for-byte against the RFC 8452 Appendix C.1 literals; kat_derive_keys checks the record keys; kat_aes128 checks the raw AES-128 block against FIPS 197. The roundtrip/tamper/wrong-key tests are secondary self-consistency."

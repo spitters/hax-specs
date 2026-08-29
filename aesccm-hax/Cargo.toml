@@ -1,0 +1,20 @@
+[package]
+name = "aesccm-hax"
+version = "0.1.0"
+edition = "2021"
+description = "AES-128-CCM (NIST SP 800-38C, RFC 3610) as a hax-extractable, no_std, fixed-size-array Rust specification"
+license = "MIT"
+repository = "https://github.com/spitters/hax-specs"
+readme = "README.md"
+keywords = ["cryptography", "aes", "ccm", "hax", "formal-verification"]
+categories = ["cryptography"]
+
+[dependencies]
+
+[dev-dependencies]
+# RustCrypto AES-CCM, used only as a test oracle
+ccm = "0.5"
+aes = "0.8"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(kani)'] }

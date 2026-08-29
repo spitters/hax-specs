@@ -1,0 +1,20 @@
+[package]
+name = "cmac-hax"
+version = "0.1.0"
+edition = "2021"
+description = "AES-128 CMAC (NIST SP 800-38B) as a hax-extractable, no_std Rust specification with FIPS 197 AES-128 included"
+license = "MIT"
+repository = "https://github.com/spitters/hax-specs"
+readme = "README.md"
+keywords = ["cryptography", "cmac", "aes", "hax", "formal-verification"]
+categories = ["cryptography"]
+
+[dependencies]
+
+[dev-dependencies]
+# RustCrypto AES-CMAC, used only as a test oracle
+cmac = "0.7"
+aes = "0.8"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(kani)'] }

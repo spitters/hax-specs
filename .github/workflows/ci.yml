@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: ${{ matrix.crate }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        crate:
+          - aesccm-hax
+          - aesgcmsiv-hax
+          - aeskw-hax
+          - cmac-hax
+          - hmacdrbg-hax
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: cargo-${{ matrix.crate }}-${{ hashFiles('Cargo.lock') }}
+          restore-keys: cargo-${{ matrix.crate }}-
+      - name: Test
+        run: cargo test --release -p ${{ matrix.crate }}
+      - name: Clippy
+        run: cargo clippy -p ${{ matrix.crate }} --all-targets -- -D warnings
+      - name: Rustdoc
+        run: cargo doc --no-deps -p ${{ matrix.crate }}
+        env:
+          RUSTDOCFLAGS: -D warnings

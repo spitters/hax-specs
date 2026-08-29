@@ -1,0 +1,9 @@
+[workspace]
+resolver = "2"
+members = [
+    "aesccm-hax",
+    "aesgcmsiv-hax",
+    "aeskw-hax",
+    "cmac-hax",
+    "hmacdrbg-hax",
+]

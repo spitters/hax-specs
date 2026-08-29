@@ -1,0 +1,17 @@
+[package]
+name = "aesgcmsiv-hax"
+version = "0.1.0"
+edition = "2021"
+description = "Hax-extractable pure-Rust specification of AES-GCM-SIV (RFC 8452)"
+license = "MIT"
+repository = "https://github.com/spitters/hax-specs"
+readme = "README.md"
+keywords = ["cryptography", "aes-gcm-siv", "aead", "hax", "specification"]
+categories = ["cryptography"]
+
+[dependencies]
+
+[dev-dependencies]
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(kani)'] }

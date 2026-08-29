@@ -1,0 +1,10 @@
+# Validation manifest. Fields: `primitive` names the algorithm and standard;
+# `reference` names the published test vectors the tests check against;
+# `reference_kind` classifies the source; `test_files` lists the test modules;
+# `notes` states which tests are known-answer tests and which are
+# self-consistency checks.
+primitive = "HMAC_DRBG with SHA-256 (NIST SP 800-90A Rev. 1)"
+reference = "NIST CAVP DRBGVS HMAC_DRBG.rsp, [SHA-256] groups, COUNT = 0 of the no_reseed, pr_false and pr_true files (EntropyInputLen 256, NonceLen 128, ReturnedBitsLen 1024)"
+reference_kind = "nist-cavp"
+test_files = ["tests/kat_vectors.rs", "tests/cavp_drbgvs.rs"]
+notes = "tests/cavp_drbgvs.rs checks nine CAVP vectors byte-for-byte (no reseed with and without personalization and additional input; reseed between instantiate and generate; prediction resistance as reseed before each generate). kat_nist_cavp_sha256_count0 in tests/kat_vectors.rs is the no_reseed COUNT = 0 vector; the remaining tests there are self-consistency checks."

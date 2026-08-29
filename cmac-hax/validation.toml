@@ -1,0 +1,9 @@
+# Validation manifest for this crate.
+# Fields: `primitive` names the algorithm; `reference` and `reference_kind`
+# identify the source of the known-answer vectors; `test_files` lists the
+# test modules that assert them; `notes` states what each test file checks.
+primitive = "AES-CMAC (SP 800-38B)"
+reference = "NIST SP 800-38B Appendix D.1 AES-128 CMAC example vectors (subkeys + tags); cross-checked against RustCrypto cmac 0.7 crate"
+reference_kind = "nist-cavp"
+test_files = ["tests/kat_vectors.rs", "tests/cmac_crosscheck.rs"]
+notes = "kat_vectors.rs asserts SP 800-38B D.1 subkeys K1/K2 and tags (empty, 16-, 40- and 64-byte messages) verbatim; cmac_crosscheck.rs byte-matches the RustCrypto cmac crate across message lengths."
