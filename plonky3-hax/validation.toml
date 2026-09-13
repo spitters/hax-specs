@@ -1,0 +1,11 @@
+# Validation manifest. Fields: `primitive` names the algorithm and its standard;
+# `reference` names the known-answer source and any cross-check oracle;
+# `reference_kind` classifies the source (rfc-vectors, nist-cavp,
+# independent-crate, paper-vectors); `test_files` lists the test modules that
+# consume them; `notes` says what each test module asserts and which values are
+# external and which are self-frozen.
+primitive = "Baby Bear prime field (p = 2^31 - 2^27 + 1) and the width-16 Poseidon2 permutation default_babybear_poseidon2_16 of Plonky3 p3-baby-bear 0.5"
+reference = "Plonky3 p3-baby-bear 0.5.2 sources (commit 3b3e175030dbd22770387eb9bf4f59e437fcab34): the Poseidon2 input/output pair of test_default_babybear_poseidon2_width_16 in src/poseidon2.rs and the TwoAdicData / RelativelyPrimePower<7> constants in src/baby_bear.rs; cross-checked against p3-baby-bear 0.5 and p3-field 0.5 used as oracles"
+reference_kind = "independent-crate"
+test_files = ["tests/plonky3_vectors.rs", "tests/poseidon2_cross.rs", "tests/cross_lib.rs"]
+notes = "External: plonky3_vectors.rs feeds the Plonky3 Poseidon2 width-16 vector and the published field constants (TWO_ADIC_GENERATORS, ROOTS_8/16, INV_ROOTS_8/16, PRIME, MONTY_GEN, the 7-th root exponent 1725656503), copied byte for byte from p3-baby-bear 0.5.2, through poseidon2_permute_16, bb_root_of_unity, bb_pow and bb_inv. Oracle: poseidon2_cross.rs compares the round constants with BABYBEAR_POSEIDON2_RC_16_* and poseidon2_permute_16 with default_babybear_poseidon2_16 on zero, all-(p-1), one-hot, counting, fixed-seed and proptest states; cross_lib.rs compares every bb_* operation with BabyBear on all pairs of 0, 1, 2, p-2, p-1, on fixed-seed and proptest inputs, bb_pow with exp_u64 up to u64::MAX, bb_root_of_unity with two_adic_generator for k = 0..=27, and bb_poly_eval with Horner evaluation in BabyBear. The vector and the oracle both come from Plonky3; no vector for this instance was found outside Plonky3 (HorizenLabs publishes Baby Bear vectors for its own width-24 instance only). Self-frozen, not an independent reference: tests/kat_vectors.rs (field values, Merkle hashes, FRI fold values, trace commitments and transcript seeds of the reference STARK, which has no external specification). Self-consistency only: tests/proptest_equiv.rs, tests/spec_tests.rs and the unit tests."

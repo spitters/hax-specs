@@ -1,0 +1,8 @@
+target/
+# hax frontend export (about 66 MB); regenerate with `cargo hax json`, see README.
+hax_frontend_export.json
+# cargo-fuzz working directories
+fuzz/target/
+fuzz/corpus/
+fuzz/artifacts/
+fuzz/coverage/

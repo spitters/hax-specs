@@ -1,0 +1,28 @@
+[package]
+name = "plonky3-hax-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+# A standalone package: `cargo +nightly fuzz` builds it outside any enclosing workspace.
+[workspace]
+members = ["."]
+
+[dependencies]
+libfuzzer-sys = "0.4"
+arbitrary = { version = "1", features = ["derive"] }
+p3-baby-bear = "0.5"
+p3-field = "0.5"
+
+[dependencies.plonky3-hax]
+path = ".."
+
+[[bin]]
+name = "bb_equiv_p3"
+path = "fuzz_targets/bb_equiv_p3.rs"
+test = false
+doc = false
+bench = false

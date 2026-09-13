@@ -11,5 +11,6 @@ members = [
     "hmacdrbg-hax",
     "kbkdf-hax",
     "kmac-hax",
+    "plonky3-hax",
     "xtsaes-hax",
 ]

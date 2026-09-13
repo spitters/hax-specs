@@ -27,6 +27,7 @@ in its README and in `validation.toml`.
 | [`hmacdrbg-hax`](hmacdrbg-hax) | HMAC_DRBG with SHA-256, NIST SP 800-90A Rev. 1 | NIST CAVP DRBGVS | — |
 | [`kbkdf-hax`](kbkdf-hax) | KBKDF counter mode with HMAC-SHA256, NIST SP 800-108 Rev. 1 | NIST CAVP KDFCTR_gen (HMAC_SHA256, counter before fixed data, 32-bit counter) | — |
 | [`kmac-hax`](kmac-hax) | KMAC128/256 over cSHAKE, NIST SP 800-185 / FIPS 202 | SP 800-185 samples 1–6, FIPS 202 digests | RustCrypto `sha3` (cSHAKE) |
+| [`plonky3-hax`](plonky3-hax) | Plonky3 Baby Bear field (p = 2^31 − 2^27 + 1) and Poseidon2 width 16 (`default_babybear_poseidon2_16`), with a reference STARK that follows no published specification | Plonky3 `p3-baby-bear` 0.5.2 test `test_default_babybear_poseidon2_width_16` (recorded by Plonky3) | Polygon `p3-baby-bear`, `p3-poseidon2` 0.5 |
 | [`xtsaes-hax`](xtsaes-hax) | XTS-AES-128, IEEE Std 1619-2018 (whole blocks) | IEEE 1619 Annex B Vectors 1–4, FIPS 197 Appendix C.1 | RustCrypto `xts-mode` |
 
 The pure specifications of the libcrux primitives (hashes, HMAC, HKDF, AES,
@@ -37,7 +38,7 @@ crate [`libcrux-specs-hax`](https://github.com/spitters/libcrux-specs-hax).
 
 | Path | Contents |
 | --- | --- |
-| `src/lib.rs` | The specification, in the hax-extractable fragment: bounded `for` loops, fixed-size arrays, no heap allocation |
+| `src/lib.rs` | The specification, in the hax-extractable fragment: bounded `for` loops, fixed-size arrays, no heap allocation (the reference STARK of `plonky3-hax` uses `Vec`; its field and permutation modules follow the rule) |
 | `tests/` | Known-answer tests and cross-checks |
 | `validation.toml` | The standard, the vector provenance and the test files that assert them |
 | `proofs/lean/extraction/` | The Lean module produced by `cargo hax into lean` |

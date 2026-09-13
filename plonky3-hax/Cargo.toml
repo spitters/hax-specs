@@ -1,0 +1,34 @@
+[package]
+name = "plonky3-hax"
+version = "0.1.0"
+edition = "2021"
+description = "The Baby Bear prime field and the width-16 Poseidon2 permutation of Plonky3 0.5, with a reference STARK over them, as a hax-extractable Rust specification"
+license = "MIT"
+repository = "https://github.com/spitters/hax-specs"
+readme = "README.md"
+keywords = ["cryptography", "poseidon2", "babybear", "hax", "formal-verification"]
+categories = ["cryptography"]
+
+[dependencies]
+# Linked only with the `kani-equiv` feature, for the Kani harnesses in
+# `src/kani.rs` that compare `specs::baby_bear` with the Montgomery-form field
+# of `p3-baby-bear`.
+p3-baby-bear = { version = "0.5", optional = true }
+p3-field = { version = "0.5", optional = true }
+
+[features]
+default = []
+# Enables the equivalence harnesses in `src/kani.rs`: `cargo kani --features kani-equiv`.
+kani-equiv = ["dep:p3-baby-bear", "dep:p3-field"]
+
+[dev-dependencies]
+# Plonky3 crates, used only as test oracles
+p3-baby-bear = "0.5"
+p3-field = "0.5"
+p3-symmetric = "0.5"
+proptest = "1.5"
+rand = "0.8"
+hex-literal = "0.4"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(kani)'] }

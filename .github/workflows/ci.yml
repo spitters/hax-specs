@@ -24,6 +24,7 @@ jobs:
           - hmacdrbg-hax
           - kbkdf-hax
           - kmac-hax
+          - plonky3-hax
           - xtsaes-hax
     steps:
       - uses: actions/checkout@v4
